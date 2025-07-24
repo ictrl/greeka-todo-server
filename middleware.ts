@@ -2,15 +2,23 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export const config = {
-  matcher: '/api/:path*', // Apply only to API routes
+  matcher: [
+    '/api/:path*',
+  ],
 };
 
 export default function middleware(request: NextRequest) {
   const origin = request.headers.get('origin');
+  const { pathname } = request.nextUrl;
+
+  // Only apply to API routes
+  if (!pathname.startsWith('/api/')) {
+    return NextResponse.next();
+  }
 
   // Handle preflight requests
   if (request.method === 'OPTIONS') {
-    return new Response(null, {
+    return new NextResponse(null, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
