@@ -1,5 +1,13 @@
 import pool from '../../../lib/db'
 
+// CORS middleware function
+function enableCors(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Max-Age', '86400')
+}
+
 /**
  * @swagger
  * /tasks:
@@ -81,6 +89,14 @@ import pool from '../../../lib/db'
  */
 export default async function handler(req, res) {
   const { method } = req
+
+  // Enable CORS for all requests
+  enableCors(res)
+
+  // Handle preflight OPTIONS request
+  if (method === 'OPTIONS') {
+    return res.status(200).end()
+  }
 
   switch (method) {
     case 'GET':

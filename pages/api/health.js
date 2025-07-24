@@ -1,9 +1,27 @@
 import pool from '../../lib/db'
 
+// CORS middleware function
+function enableCors(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Max-Age', '86400')
+}
+
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
+  const { method } = req
+
+  // Enable CORS for all requests
+  enableCors(res)
+
+  // Handle preflight OPTIONS request
+  if (method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
+  if (method !== 'GET') {
     res.setHeader('Allow', ['GET'])
-    return res.status(405).json({ error: `Method ${req.method} Not Allowed` })
+    return res.status(405).json({ error: `Method ${method} Not Allowed` })
   }
 
   try {
