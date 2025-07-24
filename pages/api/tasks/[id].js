@@ -1,13 +1,5 @@
 import pool from '../../../lib/db'
 
-// CORS middleware function
-function enableCors(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  res.setHeader('Access-Control-Max-Age', '86400')
-}
-
 /**
  * @swagger
  * /tasks/{id}:
@@ -100,13 +92,20 @@ export default async function handler(req, res) {
   const { method } = req
   const { id } = req.query
 
-  // Enable CORS for all requests
-  enableCors(res)
-
-  // Handle preflight OPTIONS request
+  // Handle OPTIONS preflight request
   if (method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    res.setHeader('Access-Control-Max-Age', '86400')
     return res.status(200).end()
   }
+
+  // Add CORS headers to all responses
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Max-Age', '86400')
 
   // Validate ID
   if (!id || isNaN(parseInt(id))) {
