@@ -1,5 +1,4 @@
 import pool from '../../../lib/db'
-import { corsMiddleware } from '../../../lib/cors.js'
 
 /**
  * @swagger
@@ -92,9 +91,6 @@ import { corsMiddleware } from '../../../lib/cors.js'
 export default async function handler(req, res) {
   const { method } = req
   const { id } = req.query
-
-  // Apply CORS middleware
-  await corsMiddleware(req, res)
 
   // Validate ID
   if (!id || isNaN(parseInt(id))) {

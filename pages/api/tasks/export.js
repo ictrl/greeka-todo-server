@@ -1,5 +1,4 @@
 import pool from '../../../lib/db'
-import { corsMiddleware } from '../../../lib/cors.js'
 
 /**
  * @swagger
@@ -39,9 +38,6 @@ import { corsMiddleware } from '../../../lib/cors.js'
  */
 export default async function handler(req, res) {
   const { method } = req
-
-  // Apply CORS middleware
-  await corsMiddleware(req, res)
 
   if (method !== 'GET') {
     res.setHeader('Allow', ['GET'])
