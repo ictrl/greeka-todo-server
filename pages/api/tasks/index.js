@@ -1,18 +1,5 @@
 import pool from '../../../lib/db'
-import Cors from 'cors';
-import { initMiddleware } from '../../../lib/init-middleware';
-
-const cors = initMiddleware(
-  Cors({
-    origin: [
-      'https://greeka-todo-server-nu0ojk0zb-ictrls-projects-0e368638.vercel.app',
-      'https://your-frontend.vercel.app',
-      'http://localhost:3000' // for dev
-    ],
-    methods: ['GET', 'POST', 'OPTIONS'],
-    credentials: true,
-  })
-);
+import { corsMiddleware } from '../../../lib/cors.js'
 
 /**
  * @swagger
@@ -94,23 +81,10 @@ const cors = initMiddleware(
  *         description: Internal server error
  */
 export default async function handler(req, res) {
-  await cors(req, res);
   const { method } = req
 
-  // Handle OPTIONS preflight request
-  if (method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    res.setHeader('Access-Control-Max-Age', '86400')
-    return res.status(200).end()
-  }
-
-  // Add CORS headers to all responses
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  res.setHeader('Access-Control-Max-Age', '86400')
+  // Apply CORS middleware
+  await corsMiddleware(req, res)
 
   switch (method) {
     case 'GET':

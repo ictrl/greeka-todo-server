@@ -1,4 +1,5 @@
 import pool from '../../../lib/db'
+import { corsMiddleware } from '../../../lib/cors.js'
 
 /**
  * @swagger
@@ -39,20 +40,8 @@ import pool from '../../../lib/db'
 export default async function handler(req, res) {
   const { method } = req
 
-  // Handle OPTIONS preflight request
-  if (method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    res.setHeader('Access-Control-Max-Age', '86400')
-    return res.status(200).end()
-  }
-
-  // Add CORS headers to all responses
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  res.setHeader('Access-Control-Max-Age', '86400')
+  // Apply CORS middleware
+  await corsMiddleware(req, res)
 
   if (method !== 'GET') {
     res.setHeader('Allow', ['GET'])
