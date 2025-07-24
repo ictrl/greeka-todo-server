@@ -10,18 +10,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "next": "^15.4.3",
+    "pg": "^8.11.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "pg": "^8.11.3",
-    "swagger-jsdoc": "^6.2.8",
-    "dotenv": "^16.4.5"
+    "swagger-jsdoc": "^6.2.8"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.4.3"
   },
-  "keywords": ["nextjs", "api", "postgresql", "todo"],
+  "keywords": [
+    "nextjs",
+    "api",
+    "postgresql",
+    "todo"
+  ],
   "author": "",
   "license": "MIT"
-} 
+}

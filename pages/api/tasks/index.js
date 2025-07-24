@@ -1,4 +1,18 @@
 import pool from '../../../lib/db'
+import Cors from 'cors';
+import { initMiddleware } from '../../../lib/init-middleware';
+
+const cors = initMiddleware(
+  Cors({
+    origin: [
+      'https://greeka-todo-server-nu0ojk0zb-ictrls-projects-0e368638.vercel.app',
+      'https://your-frontend.vercel.app',
+      'http://localhost:3000' // for dev
+    ],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+  })
+);
 
 /**
  * @swagger
@@ -80,6 +94,7 @@ import pool from '../../../lib/db'
  *         description: Internal server error
  */
 export default async function handler(req, res) {
+  await cors(req, res);
   const { method } = req
 
   // Handle OPTIONS preflight request
