@@ -17,6 +17,7 @@ export default function Home() {
         <h2>✅ API Status</h2>
         <p>Your Next.js API server is running successfully!</p>
         <p>Check the health endpoint: <a href="/api/health" target="_blank">/api/health</a></p>
+        <p>Check the swagger documentation: <a href="/docs" target="_blank">/docs</a></p>
       </div>
 
       <div style={{ 

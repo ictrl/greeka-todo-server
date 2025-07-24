@@ -50,7 +50,7 @@ export default function DocsPage() {
         // Initialize Swagger UI
         if (window.SwaggerUIBundle) {
           window.SwaggerUIBundle({
-            url: '/api/swagger.json',
+            url: '/swagger.json',
             dom_id: '#swagger-ui',
             deepLinking: true,
             presets: [

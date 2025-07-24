@@ -49,4 +49,4 @@ npm run dev
 - `PUT /api/tasks/[id]` - Update task
 - `DELETE /api/tasks/[id]` - Delete task
 - `GET /api/tasks/export` - Export tasks
-- `GET /api/swagger.json` - OpenAPI Specification
+- `GET /swagger.json` - OpenAPI Specification
