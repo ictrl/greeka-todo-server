@@ -1,6 +1,6 @@
 import pool from '../../../lib/db'
 
-// CORS middleware function
+// CORS middleware function - Updated for deployment
 function enableCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
